@@ -129,7 +129,7 @@ BrowserWindow.getAllWindowTags()
 
 ## HTML Response Body
 
-On the *first* solve, the HTML response body is not returned. This is intentional, as Jackett only requires the cookie and user agent. For clients that expect the `response` field to be populated on *every* `response`, awaiting `afterSolve` before returning the result would provide the HTML — at the cost of awaiting the axios request.
+On the *first* solve, the HTML response body is not returned. This is intentional, as Jackett only requires the cookie and user agent. For clients that expect HTML field to be populated on *every* response, awaiting `afterSolve` before returning the result would provide the HTML — at the cost of awaiting the axios request.
 
 ## Notes
 
