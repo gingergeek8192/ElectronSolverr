@@ -110,8 +110,17 @@ this.solverWindow = new BrowserWindow('_solver', { ...opts })
 You can then use the full `windows.js` API to manage the solver window from anywhere in your app:
 
 ```js
+// get the solver window instance
 BrowserWindow.fromTag('_solver')
+
+// check if the solver window exists
 BrowserWindow.isWindow('_solver')
+
+// get all tagged window instances
+BrowserWindow.getAllTaggedWindows()
+
+// get all registered tags
+BrowserWindow.getAllWindowTags()
 ```
 
 ## Notes
