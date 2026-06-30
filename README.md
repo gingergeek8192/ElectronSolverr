@@ -66,6 +66,16 @@ Two files are written:
 | `solver` | Cached solver results (cookies, URLs) |
 | `<domain>` | HTML snapshot of the solved page, used to validate cached cookies on subsequent requests |
 
+The `solver` file is a JSON object keyed by `<url>:<ip>:<port>` when a proxy is used, or `<url>:0:0` when no proxy is set:
+
+```json
+{
+  "https://torrentcore.xyz/index:45.38.107.97:6014": { },
+  "https://torrentcore.xyz/index:0:0": { }
+}
+```
+
+
 The store is flushed to disk automatically on `before-quit`.
 
 ## Window Management — `windows.js` (optional)
