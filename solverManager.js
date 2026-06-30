@@ -97,7 +97,15 @@ const solverManager = {
                 solver.config.errorState = false
                 return solver.loadPage(url)
             }
-            return await solver.solve(url)
+            // In case an existing solve persisted cookie lands a 403 (torrent[CORE] for example)
+            // This will stop the solver from hanging. Duration/Interval may need adjusting
+            return await Promise.race([
+                solver.solve(url),
+                new Promise(resolve => setTimeout(() => {
+                    clearInterval(solver.config.interval)
+                    resolve(solver.config.deniedOBJECT)
+                }, 15000))
+            ])
         }
         return solver
     }
