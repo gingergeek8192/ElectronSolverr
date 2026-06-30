@@ -132,6 +132,14 @@ BrowserWindow.getAllWindowTags()
 
 On the *first* solve, the HTML response body is not returned. This is intentional, as Jackett only requires the cookie and user agent. For clients that expect HTML field to be populated on *every* response, awaiting `afterSolve` before returning the result would provide the HTML — at the cost of awaiting the axios request.
 
+## Proxy Rotation
+
+`solverServer.newProxy()` destroys the current solver window and clears the Cloudflare session. Call this from your main process when rotating proxies to ensure the next solve starts fresh.
+
+```js
+await solverServer.newProxy()
+```
+
 ## Notes
 
 - The host app must use `"type": "module"` in its `package.json` as all files use ES module syntax

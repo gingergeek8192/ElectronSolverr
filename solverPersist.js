@@ -21,7 +21,7 @@ const persist = {
         this.store.getSession = () => session.fromPartition(`persist:solver`)
         this.store.set = (key, val) => this.cookies.set(key, val)
         this.store.load = () => this.readStore(this.storePath('solver'), []).forEach(ent => this.cookies.set(ent.key, ent))
-        this.store.clearSession = async () => await this.store.getSession.clearStorageData({ storages: ['cookies', 'shadercache', 'cachestorage', 'indexdb'] })
+        this.store.clearSession = async () => await this.store.getSession().clearStorageData({ storages: ['cookies', 'shadercache', 'cachestorage', 'indexdb'] })
         this.store.setSnap = (fileName, html) => this.writeStore(this.storePath(fileName), html)
         this.store.getSnap = (fileName) => this.readStore(this.storePath(fileName), '')
 
