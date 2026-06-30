@@ -172,6 +172,8 @@ const solverConfig = {
                         this.MESSAGE = `Access Denied!`
                         return this.deniedOBJECT
                     },
+                    // This branch is not pretty and the fastest loading pages are the longest to return a cookie.
+                    // This branch should be revised completely when there is time but it does work for now.
                     [`challenge not detected`]: () => new Promise(resolve => {
                         const res = async () => {
                             if (!this.resolving) {

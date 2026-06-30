@@ -32,6 +32,9 @@ const solverManager = {
             height: Math.floor(768 - Math.random() * 100),
             x: Math.floor(screen.width / 2),
             y: Math.floor(screen.height / 2),
+            // NOTE: In testing on macOS, if show: true the solver will be halted/throttled when
+            // the window is hidden under other app windows. This does not seem to be the case with 
+            // show: false
             show: false,
             skipTaskbar: true,
             paintWhenInitiallyHidden: true,
