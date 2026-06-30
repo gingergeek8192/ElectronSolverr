@@ -78,6 +78,7 @@ const solverManager = {
                 solver.connection = details.responseHeaders
                 callback({ responseHeaders: details.responseHeaders })
                 Observer.sampleHeaders(details)
+                if (details.statusCode === 403) solver.config.denied = true
             })
 
         solver.config.wc.session.webRequest.onBeforeRequest({ urls: ['http://*/*', 'https://*/*'] }, (details, cb) => {
