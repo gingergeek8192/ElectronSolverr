@@ -5,7 +5,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](./LICENSE)  
 Copyright (c) 2026 gingergeek8192
 
-A Cloudflare challenge solver module for Electron apps. Spins up a local Express server on port `8191` that accepts FlareSolverr-compatible requests and solves Cloudflare challenges using an Electron `BrowserWindow`.
+A Cloudflare challenge solver module for Electron apps. Spins up a local Express server on port `8191` that accepts FlareSolverr-compatible requests and solves Cloudflare challenges using an Electron `BrowserWindow`. Built for use with Jackett, but may be useful for any app that supports FlareSolverr — note that the HTML response body is not returned on the first solve, which may limit compatibility with some clients.
 
 ## Usage
 
@@ -126,6 +126,10 @@ BrowserWindow.getAllTaggedWindows()
 // get all registered tags
 BrowserWindow.getAllWindowTags()
 ```
+
+## HTML Response Body
+
+On the *first* solve, the HTML response body is not returned. This is intentional, as Jackett only requires the cookie and user agent. For clients that expect the `response` field to be populated on *every* `response`, awaiting `afterSolve` before returning the result would provide the HTML — at the cost of awaiting the axios request.
 
 ## Notes
 
