@@ -101,10 +101,14 @@ Tags are automatically removed when a window is closed.
 import { BrowserWindow } from './windows.js'
 ```
 
-Then in `buildSolverWindow`, pass `'_solver'` as the tag:
+Then in `buildSolverWindow`, you can either use `new BrowserWindow` with the tag, or use `oneWindow` which handles destroying any existing solver window before creating a new one — replacing the manual `isSolverWindow()` check:
 
 ```js
+// simple tagged window
 this.solverWindow = new BrowserWindow('_solver', { ...opts })
+
+// or use oneWindow to guarantee a clean instance
+this.solverWindow = BrowserWindow.oneWindow('_solver', { ...opts })
 ```
 
 You can then use the full `windows.js` API to manage the solver window from anywhere in your app:
