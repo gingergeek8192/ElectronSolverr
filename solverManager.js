@@ -1,4 +1,5 @@
 import { session, BrowserWindow, screen } from "electron";
+// import { BrowserWindow } from './windows.js'
 import solverConfig from "./solverConfig.js";
 import Observer from '../proxy/observer.js';
 import store from './solverPersist.js'

@@ -67,6 +67,53 @@ Two files are written:
 
 The store is flushed to disk automatically on `before-quit`.
 
+## Window Management — `windows.js` (optional)
+
+`windows.js` provides an extended `BrowserWindow` class that lets you tag windows by name for easy lookup and management across your app.
+
+```js
+import { BrowserWindow } from './windows.js'
+
+// create a tagged window exactly like you would normally
+const win = new BrowserWindow('_main', { width: 1200, height: 800 })
+
+// look it up anywhere by tag
+BrowserWindow.fromTag('_main')
+
+// check it exists
+BrowserWindow.isWindow('_main')
+
+// get all tagged windows
+BrowserWindow.getAllTaggedWindows()
+
+// close all tagged windows
+BrowserWindow.closeAll()
+```
+
+Tags are automatically removed when a window is closed.
+
+### Using with electronSolverr
+
+`solverManager.js` uses Electron's `BrowserWindow` by default. To integrate with `windows.js`, swap the import and pass a tag when calling `buildSolverWindow`:
+
+```js
+// import { session, BrowserWindow, screen } from "electron";  <-- replace this
+import { BrowserWindow } from './windows.js'
+```
+
+Then in `buildSolverWindow`, pass `'_solver'` as the tag:
+
+```js
+this.solverWindow = new BrowserWindow('_solver', { ...opts })
+```
+
+You can then use the full `windows.js` API to manage the solver window from anywhere in your app:
+
+```js
+BrowserWindow.fromTag('_solver')
+BrowserWindow.isWindow('_solver')
+```
+
 ## Notes
 
 - The host app must use `"type": "module"` in its `package.json` as all files use ES module syntax
