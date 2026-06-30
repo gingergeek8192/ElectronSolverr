@@ -33,8 +33,6 @@ const solverConfig = {
             errorState: false,
             resolving: false,
             time: null,
-            resolve: null,
-            denied: null,
 
             get isAction() {
                 return this.actions
@@ -43,7 +41,7 @@ const solverConfig = {
             get deniedOBJECT() {
                 return {
                     status: 'error',
-                    message: this.MESSAGE,
+                    message: 'Error: Error solving the challenge. Cloudflare has blocked this request. Select a different proxy and try again',
                     solution: null,
                     startTimestamp: this.START,
                     endTimestamp: Date.now(),
@@ -140,7 +138,6 @@ const solverConfig = {
                 return await ({
                     [`just a moment...`]: async () => {
                         return await new Promise(resolve => {
-                            this.resolve = resolve 
                             this.interval = setInterval(
                                 async () => {
                                     let res = await this.getSnap()
@@ -168,22 +165,15 @@ const solverConfig = {
                                         if (this.PageError(url, res.data)) resolve(this.errorOBJECT)
                                         resolve(this.responseOBJECT)
                                     }
-                                    if (this.denied) {
-                                        clearInterval(this.interval)
-                                        await this.action(`403 Forbidden`, url)
-                                    }
                                 }, 200)
                         })
                     },
-                    [`403 Forbidden`]: () => {
+                    [`access denied | ${url.toLowerCase()} used cloudflare to restrict access | ${url.toLowerCase()} | cloudflare`]: () => {
                         this.MESSAGE = `Access Denied!`
                         return this.deniedOBJECT
                     },
-                    [`access denied | ${url.toLowerCase()} used cloudflare to restrict access | ${url.toLowerCase()} | cloudflare`]: () => {
-                        this.MESSAGE = `Access Denied!`
-                        if (this.resolve) this.resolve(this.deniedOBJECT)
-                        else return this.deniedOBJECT
-                    },
+                    // This branch is not pretty and the fastest loading pages are the longest to return a cookie.
+                    // This branch should be revised completely when there is time but it does work for now.
                     [`challenge not detected`]: () => new Promise(resolve => {
                         const res = async () => {
                             if (!this.resolving) {
